@@ -1,10 +1,10 @@
 # monorepo
 
-## yarn workspaces基础命令
+## yarn workspaces 基础命令
 
 ### yarn install
 
-安装所有依赖，包含子package依赖，如果子package之间存在相互依赖会通过创建 **`软链`** 的方式引用，而非npm下载，这里可能会影响webpack配置中使用 `node_modules` 做路径判断的地方
+安装所有依赖，包含子 package 依赖，如果子 package 之间存在相互依赖会通过创建 **`软链`** 的方式引用，而非 npm 下载，这里可能会影响 webpack 配置中使用 `node_modules` 做路径判断的地方
 
 ### 依赖树关系
 
@@ -22,8 +22,7 @@ yarn workspaces info
   yarn workspace packageA remove axios
 ```
 
-  > *packageA 是需要安装依赖的包名，即 package.json 中的 name 字段，而非目录名*
-
+> _packageA 是需要安装依赖的包名，即 package.json 中的 name 字段，而非目录名_
 
 ```shell
   # root package 安装 commitizen
@@ -33,7 +32,7 @@ yarn workspaces info
   yarn remove -W commitizen
 ```
 
-### 运行单个 package 的scripts 命令
+### 运行单个 package 的 scripts 命令
 
 ```shell
   # 运行packageA 的dev命令
@@ -47,12 +46,11 @@ yarn workspaces info
 
 > Tips：这里运行命令的时候不会检测依赖树关系，只是 `package.json` 文件 `workspaces` 配置工作区逐个运行，这里推荐使用 `lerna build`
 
-
 ## lerna 命令
 
-``` shell
+```shell
   # 清除所用的 node_modules 目录
-  lerna clean 
+  lerna clean
 
   # 显示修改内容 类似git diff
   lerna diff
@@ -93,12 +91,13 @@ yarn workspaces info
   lerna version --conventional-commits --yes
 ```
 
-version 成功后会自动推送当前分支，可以结合配置 lerna.json文件 command 下 version字段 配置允许version的分支，commit 信息等
+version 成功后会自动推送当前分支，可以结合配置 lerna.json 文件 command 下 version 字段 配置允许 version 的分支，commit 信息等
+
 ```
 {
     "npmClient": "yarn",
     "useWorkspaces": true,
-    "version": "0.0.1", 
+    "version": "0.0.1",
     "command": {
         "version": {
             "allowBranch": "master",

@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-module */
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -75,7 +76,7 @@ module.exports = (isDev, PROJECT_PATH) => ({
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        options: { cacheDirectory: true },
+        options: { cacheDirectory: true, rootMode: 'upward' },
         exclude: /node_modules/,
       },
       {
@@ -153,10 +154,10 @@ module.exports = (isDev, PROJECT_PATH) => ({
     }),
     ...getPluginsByIsDev(isDev),
   ],
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  // },
   optimization: {
     minimize: !isDev,
     minimizer: !isDev

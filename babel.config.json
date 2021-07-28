@@ -1,8 +1,5 @@
 {
-  "babelrcRoots": [
-    ".",
-    "packages/*"
-  ],
+  "babelrcRoots": [".", "packages/*"],
   "presets": [
     [
       "@babel/preset-env",
