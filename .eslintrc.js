@@ -43,7 +43,10 @@ module.exports = {
         js: 'never',
       },
     ],
-    'import/no-extraneous-dependencies': [ERROR, { devDependencies: true, ackageDir: ['./packages/'] }],
+    'import/no-extraneous-dependencies': [
+      ERROR,
+      { devDependencies: true, packageDir: ['./', './packages/demo', './packages/util-request'] },
+    ],
     'import/prefer-default-export': OFF,
     'import/no-unresolved': ERROR,
 

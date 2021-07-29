@@ -3,3 +3,5 @@ docs
 dist
 assets
 webpack.*.js
+.eslint*
+.prittier*
