@@ -18,12 +18,9 @@ module.exports = merge(common(true, PROJECT_PATH), {
     open: true, // 打开默认浏览器
     hot: true, // 热更新
     proxy: {
-      '/api/': {
-        target: 'http://www.baidu.com',
+      '/commapk': {
+        target: 'https://www.yuge.com',
         changeOrigin: true,
-        pathRewrite: {
-          '^/api-2': '',
-        },
       },
     },
   },

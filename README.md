@@ -20,6 +20,10 @@ yarn workspaces info
 
   # packageA 移除 axios
   yarn workspace packageA remove axios
+
+  # 依赖本地包 **必须加版本号，否则报错**
+  # https://github.com/yarnpkg/yarn/issues/3973
+  yarn workspace @app/demo add @util/request@1.0.0
 ```
 
 > _packageA 是需要安装依赖的包名，即 package.json 中的 name 字段，而非目录名_
