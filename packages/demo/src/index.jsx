@@ -5,7 +5,12 @@ import axios from '@util/request'
 
 const App = () => {
   useEffect(() => {
-    axios.post('commapk/getApk.do')
+    const getApkRes = async () => {
+      const data = await axios.post('commapk/getApk.do', { test: '+++' })
+      console.log(data)
+    }
+
+    getApkRes()
   }, [])
 
   return <div>test app</div>

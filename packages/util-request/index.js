@@ -50,7 +50,21 @@ export const clearPending = () => {
 // 创建实例
 const axiosInstance = axios.create({
   timeout: 10_000,
-  transformRequest: [(data) => `data=${JSON.stringify(data)}`],
+  transformRequest: [
+    (data) => {
+      if (Object.prototype.toString.call(data) === '[Object Object]') {
+        return `data=${JSON.stringify(data)}`
+      }
+
+      const nextData = {}
+      Object.entries(data).map((item) => {
+        const [key, value] = item
+        nextData[key] = encodeURIComponent(value)
+        return value
+      })
+      return `data=${JSON.stringify(nextData)}`
+    },
+  ],
 })
 
 // 请求拦截器
