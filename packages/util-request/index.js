@@ -73,7 +73,11 @@ axiosInstance.interceptors.request.use(
     removePending(config)
     return addPending(config)
   },
-  (err) => Promise.reject(err),
+  (err) => {
+    // 清空所有请求
+    clearPending()
+    return Promise.reject(err)
+  },
 )
 
 // 响应拦截
@@ -87,7 +91,7 @@ axiosInstance.interceptors.response.use(
   },
   (err) => {
     if (axios.isCancel(err)) {
-      throw new axios.Cancel('cancel request')
+      throw new axios.Cancel('重复请求：请求已取消')
     }
     return Promise.reject(err)
   },
