@@ -45,7 +45,10 @@ module.exports = {
     ],
     'import/no-extraneous-dependencies': [
       ERROR,
-      { devDependencies: true, packageDir: ['./', './packages/demo', './packages/util-request'] },
+      {
+        devDependencies: true,
+        packageDir: ['./', './packages/app-demo', './packages/util-request', './packages/component-scroll'],
+      },
     ],
     'import/prefer-default-export': OFF,
     'import/no-unresolved': ERROR,
