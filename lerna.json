@@ -1,5 +1,5 @@
 {
   "version": "independent",
-  "npmClient": "yarn", // 执行命令的client，默认为npm，我们设置为 yarn
-  "useWorkspaces": true // 开启工作区模式 用 yarn 进行依赖管理
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }

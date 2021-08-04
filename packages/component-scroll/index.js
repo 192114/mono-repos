@@ -20,10 +20,16 @@ const Scroll = forwardRef((props, ref) => {
   const { onScroll, pullDown, pullUp } = props
 
   const pullDownDebounce = useMemo(() => {
+    if (!pullDown) {
+      return null
+    }
     return debounce(pullDown, 500)
   }, [pullDown])
 
   const pullUpDebounce = useMemo(() => {
+    if (!pullUp) {
+      return null
+    }
     return debounce(pullUp, 500)
   }, [pullUp])
 

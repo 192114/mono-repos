@@ -4,11 +4,22 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "browserslist": {
+    "development": [
+      "last 1 version",
+      "not IE 11"
+    ],
+    "production": [
+      "defaults",
+      "not IE 11"
+    ]
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve --config ./webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.prod.js"
   },
   "dependencies": {
+    "@component/scroll": "1.0.0",
     "@util/request": "1.0.0"
   }
 }
