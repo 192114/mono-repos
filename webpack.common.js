@@ -50,6 +50,16 @@ const getPluginsByIsDev = (isDev) =>
 
 module.exports = (isDev, PROJECT_PATH) => ({
   stats: isDev ? 'errors-only' : 'normal', // https://webpack.js.org/configuration/stats/ 打包的一些信息
+  cache: isDev
+    ? {
+        type: 'memory',
+      }
+    : {
+        type: 'filesystem',
+        buildDependencies: {
+          config: [__filename],
+        },
+      }, // webpack5 缓存机制
   infrastructureLogging: {
     // Only warnings and errors
     // level: 'none' disable logging
@@ -95,40 +105,40 @@ module.exports = (isDev, PROJECT_PATH) => ({
           },
         ],
       },
+      /*
+      Webpack5.0新增资源模块(asset module)，它是一种模块类型，允许使用资源文件（字体，图标等）而无需     配置额外 loader。支持以下四个配置
+      asset/resource 发送一个单独的文件并导出 URL。之前通过使用 file-loader 实现。
+      asset/inline 导出一个资源的 data URI。之前通过使用 url-loader 实现。
+      asset/source 导出资源的源代码。之前通过使用 raw-loader 实现。
+      asset 在导出一个 data URI 和发送一个单独的文件之间自动选择。之前通过使用 url-loader，并且配置资     源体积限制实现。
+    */
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        type: 'asset/inline',
-        // use: [
-        //   {
-        //     loader: 'url-loader',
-        //     options: {
-        //       limit: 10 * 1024,
-        //       name: '[name].[contenthash].[ext]',
-        //       outputPath: 'assets/images',
-        //       publicPath: '../assets/images',
-        //     },
-        //   },
-        // ],
+        type: 'asset',
+        generator: {
+          // 输出文件位置以及文件名
+          filename: 'images/[name][ext]',
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, //超过10kb不转base64
+          },
+        },
       },
       {
         test: /\.(ttf|woff|woff2|eot|otf)$/,
-        type: 'asset/inline',
-        // use: [
-        //   {
-        //     loader: 'url-loader',
-        //     options: {
-        //       name: '[name].[contenthash].[ext]',
-        //       outputPath: 'assets/fonts',
-        //       publicPath: '../assets/fonts',
-        //     },
-        //   },
-        // ],
+        type: 'asset/resource',
+        generator: {
+          // 输出文件位置以及文件名
+          filename: 'fonts/[name][ext]',
+        },
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(PROJECT_PATH, './templates/index.html'),
+      template: path.resolve(PROJECT_PATH, './public/index.html'),
+      title: 'monorepo demo',
       filename: 'index.html',
       cache: false, // 特别重要：防止之后使用v6版本 copy-webpack-plugin 时代码修改一刷新页面为空问题。
       inject: 'body',
