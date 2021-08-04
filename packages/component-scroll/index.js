@@ -1,13 +1,53 @@
 import React, { useEffect, useState, useRef, forwardRef, useMemo, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
-import { debounce } from 'lodash'
 import BScroll from '@better-scroll/core'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+import { debounce } from 'lodash'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`
 
 const ScrollContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+`
+
+const LoadRefreshIcon = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+`
+
+const LoadMoreIcon = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+`
+
+const LoadingSvgSpan = styled.div`
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  animation: ${rotate} 1s linear infinite;
 `
 
 const Scroll = forwardRef((props, ref) => {
@@ -15,7 +55,7 @@ const Scroll = forwardRef((props, ref) => {
 
   const scrollContainerRef = useRef(null)
 
-  const { click, direction, children, bounceTop, bounceBottom, refresh } = props
+  const { click, direction, children, bounceTop, bounceBottom, refresh, pullUpLoading, pullDownLoading } = props
 
   const { onScroll, pullDown, pullUp } = props
 
@@ -95,7 +135,7 @@ const Scroll = forwardRef((props, ref) => {
 
     const handlePullUp = () => {
       // 判断滑动到底部
-      if (bScroll.y <= bScroll.maxScrolly + 100) {
+      if (bScroll.y <= bScroll.maxScrollY + 100) {
         pullUpDebounce()
       }
     }
@@ -130,7 +170,28 @@ const Scroll = forwardRef((props, ref) => {
     },
   }))
 
-  return <ScrollContainer ref={scrollContainerRef}>{children}</ScrollContainer>
+  const PullUpdisplayStyle = pullUpLoading ? { display: '' } : { display: 'none' }
+  const PullDowndisplayStyle = pullDownLoading ? { display: '' } : { display: 'none' }
+
+  return (
+    <ScrollContainer ref={scrollContainerRef}>
+      <div>
+        <LoadRefreshIcon style={PullDowndisplayStyle}>
+          <LoadingSvgSpan>
+            <AiOutlineLoading3Quarters />
+          </LoadingSvgSpan>
+        </LoadRefreshIcon>
+
+        {children}
+
+        <LoadMoreIcon style={PullUpdisplayStyle}>
+          <LoadingSvgSpan>
+            <AiOutlineLoading3Quarters />
+          </LoadingSvgSpan>
+        </LoadMoreIcon>
+      </div>
+    </ScrollContainer>
+  )
 })
 
 Scroll.defaultProps = {
@@ -138,11 +199,13 @@ Scroll.defaultProps = {
   direction: 'vertical',
   children: null,
   onScroll: null, // 滚动中 执行的方法
-  pullDown: null, // 底部加在更多方法
-  pullUp: null, // 上拉刷新方法
+  pullDown: null, // 下拉刷新
+  pullUp: null, // 上拉加载更多
   bounceTop: true, // 顶部 回弹动画
   bounceBottom: true, // 底部 回弹动画
   refresh: true, // 是否允许 组件依赖 变化时 调用 refresh 方法
+  pullUpLoading: false,
+  pullDownLoading: false,
 }
 
 Scroll.propTypes = {
@@ -155,6 +218,8 @@ Scroll.propTypes = {
   bounceTop: PropTypes.bool,
   bounceBottom: PropTypes.bool,
   refresh: PropTypes.bool,
+  pullUpLoading: PropTypes.bool,
+  pullDownLoading: PropTypes.bool,
 }
 
 export default Scroll
