@@ -5,6 +5,7 @@ const path = require('path')
 // fs-extra 是对 fs 模块的扩展，支持 promise 语法
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
+const Generator = require('../lib/Generator')
 
 module.exports = async function (options) {
   // 执行创建命令
@@ -29,13 +30,13 @@ module.exports = async function (options) {
   ])
 
   // 需要创建的目录地址
-  const targetAir = path.join(cwd, 'packages', projectName)
+  const targetDir = path.join(cwd, 'packages', projectName)
 
   // 目录是否已经存在？
-  if (fs.existsSync(targetAir)) {
+  if (fs.existsSync(targetDir)) {
     // 是否为强制创建？
     if (options.force) {
-      await fs.remove(targetAir)
+      await fs.remove(targetDir)
     } else {
       // 询问用户是否确定要覆盖
       const { action } = await inquirer.prompt([
@@ -57,10 +58,11 @@ module.exports = async function (options) {
       ])
 
       if (!action) {
+        return
       } else if (action === 'overwrite') {
         // 移除已存在的目录
         console.log('\r\nRemoving...')
-        await fs.remove(targetAir)
+        await fs.remove(targetDir)
       }
     }
   }
@@ -75,7 +77,7 @@ module.exports = async function (options) {
     },
   ])
 
-  // 是否需要webpack文件
-  if (needWebpack) {
-  }
+  const generator = new Generator(projectName, targetDir, needWebpack)
+
+  generator.create()
 }

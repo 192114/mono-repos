@@ -27,7 +27,7 @@
     "autoPublish": "lerna publish --conventional-commits --yes",
     "version": "lerna version --conventional-commits --yes",
     "commit": "git-cz",
-    "create": "node ./packages/util-cli/bin/cli.js create -f"
+    "create": "node ./packages/util-cli/bin/cli.js create"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
