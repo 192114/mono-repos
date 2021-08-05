@@ -5,3 +5,4 @@ assets
 webpack.*.js
 .eslint*
 .prittier*
+packages/util-cli

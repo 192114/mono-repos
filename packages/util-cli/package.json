@@ -1,0 +1,18 @@
+{
+  "name": "@util/cli",
+  "version": "1.0.0",
+  "description": "bootstrap project",
+  "main": "index.js",
+  "bin": {
+    "init": "./bin/cli.js"
+  },
+  "author": "liar",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.1.0",
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.1.2"
+  }
+}
