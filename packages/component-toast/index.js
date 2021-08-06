@@ -36,16 +36,14 @@ const BaseToast = ({ msg, Icon }) => {
 // loading toast
 const LoadingToast = ({ msg, Icon }) => {
   return (
-    <Mask>
-      <ToastContainer>
-        <div>
-          <IconSpinContainer>
-            <Icon />
-          </IconSpinContainer>
-          <Text>{msg}</Text>
-        </div>
-      </ToastContainer>
-    </Mask>
+    <ToastContainer>
+      <div>
+        <IconSpinContainer>
+          <Icon />
+        </IconSpinContainer>
+        <Text>{msg}</Text>
+      </div>
+    </ToastContainer>
   )
 }
 
@@ -72,11 +70,21 @@ const handleToastRender = (options) => {
   div.setAttribute('class', 'component-toast')
   document.body.append(div)
 
+  let Component = BaseToast
+
   if (options.type === 'loading') {
-    ReactDOM.render(<LoadingToast msg={options.message} Icon={() => <Icon />} />, div)
-  } else {
-    ReactDOM.render(<BaseToast msg={options.message} Icon={() => <Icon />} />, div)
+    Component = LoadingToast
   }
+
+  const HocComponent = options.forbidClick ? (
+    <Mask>
+      <Component msg={options.message} Icon={() => <Icon />} />
+    </Mask>
+  ) : (
+    <Component msg={options.message} Icon={() => <Icon />} />
+  )
+
+  ReactDOM.render(HocComponent, div)
 
   // 如果delay=0则不消失
   if (options.delay !== 0) {
