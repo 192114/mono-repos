@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@component/scroll": "1.0.0",
+    "@component/toast": "1.0.0",
     "@util/request": "1.0.0"
   }
 }

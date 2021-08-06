@@ -1,0 +1,20 @@
+{
+  "name": "@component/toast",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "browserslist": {
+    "development": [
+      "last 1 version",
+      "not IE 11"
+    ],
+    "production": [
+      "defaults",
+      "not IE 11"
+    ]
+  },
+  "dependencies": {
+    "styled-components": "^5.3.0"
+  }
+}

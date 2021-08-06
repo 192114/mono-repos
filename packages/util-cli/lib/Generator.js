@@ -47,7 +47,7 @@ class Generator {
   // 核心创建逻辑
   async create() {
     const result = await this.download()
-    console.log(result)
+
     // 成功返回undefined 失败返回'error'
     if (result !== 'error') {
       // fs.unlink(path.join(this.targetDir, 'LICENSE'))

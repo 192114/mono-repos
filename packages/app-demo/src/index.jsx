@@ -4,6 +4,7 @@ import reactDom from 'react-dom'
 import axios from '@util/request'
 
 import Scroll from '@component/scroll'
+import Toast from '@component/toast'
 
 import './index.less'
 
@@ -23,8 +24,10 @@ const App = () => {
 
   useEffect(() => {
     const getApkRes = async () => {
+      Toast.loading({ delay: 0, message: '加载中...' })
       const data = await axios.post('commapk/getApk.do', { test: '+++' })
       console.log(data)
+      Toast.clear()
     }
 
     getApkRes()
@@ -42,6 +45,18 @@ const App = () => {
   return (
     <div className="container">
       <Scroll pullUpLoading={pullUpLoading} pullUp={onPullUp}>
+        <button type="button" onClick={() => Toast.info('info', 2000)}>
+          toast info
+        </button>
+        <button type="button" onClick={() => Toast.success('success', 2000)}>
+          toast success
+        </button>
+        <button type="button" onClick={() => Toast.fail('fail', 2000)}>
+          toast fail
+        </button>
+        <button type="button" onClick={() => Toast.loading({ delay: 0, message: 'loading' })}>
+          toast loading
+        </button>
         {list.map((item) => (
           <div key={item} style={{ height: 30 }}>
             {item}
