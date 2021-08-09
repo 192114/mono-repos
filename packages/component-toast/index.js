@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { AiOutlineInfoCircle, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineLoading } from 'react-icons/ai'
 
@@ -19,10 +19,27 @@ const iconTypes = {
   loading: AiOutlineLoading,
 }
 
+// 自定义动画钩子
+const useTransition = () => {
+  const [opacity, setOpacity] = useState(0)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOpacity(1)
+    })
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
+
+  return opacity
+}
+
 // 基础toast
 const BaseToast = ({ msg, Icon }) => {
+  const opacity = useTransition()
   return (
-    <ToastContainer>
+    <ToastContainer opacity={opacity}>
       <div>
         <IconContainer>
           <Icon />
@@ -35,8 +52,9 @@ const BaseToast = ({ msg, Icon }) => {
 
 // loading toast
 const LoadingToast = ({ msg, Icon }) => {
+  const opacity = useTransition()
   return (
-    <ToastContainer>
+    <ToastContainer opacity={opacity}>
       <div>
         <IconSpinContainer>
           <Icon />

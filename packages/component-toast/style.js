@@ -38,6 +38,8 @@ export const ToastContainer = styled.div`
   background: rgba(0, 0, 0, 0.7);
   border-radius: 6px;
   -webkit-font-smoothing: antialiased;
+  opacity: ${(props) => props.opacity};
+  transition: opacity 0.5s;
 `
 
 export const IconContainer = styled.div`
@@ -45,6 +47,7 @@ export const IconContainer = styled.div`
   height: 46px;
   margin: 0 auto;
   font-size: 46px;
+  line-height: 46px;
   text-align: center;
 `
 
@@ -53,6 +56,7 @@ export const IconSpinContainer = styled.div`
   height: 46px;
   margin: 0 auto;
   font-size: 46px;
+  line-height: 46px;
   text-align: center;
   animation: ${rotate} 1s linear infinite;
 `
