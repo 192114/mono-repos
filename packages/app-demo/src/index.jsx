@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import reactDom from 'react-dom'
 
+import { AiFillGithub } from 'react-icons/ai'
+
 import axios from '@util/request'
 
 import Scroll from '@component/scroll'
@@ -29,7 +31,6 @@ const App = () => {
       console.log(data)
       Toast.clear()
     }
-
     getApkRes()
   }, [])
 
@@ -56,6 +57,12 @@ const App = () => {
         </button>
         <button type="button" onClick={() => Toast.loading({ delay: 0, message: 'loading' })}>
           toast loading
+        </button>
+        <button
+          type="button"
+          onClick={() => Toast.show({ delay: 3000, message: '自定义图标', icon: <AiFillGithub /> })}
+        >
+          toast 自定义
         </button>
         {list.map((item) => (
           <div key={item} style={{ height: 30 }}>

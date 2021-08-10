@@ -13,10 +13,10 @@ const defaultOpts = {
 }
 
 const iconTypes = {
-  info: AiOutlineInfoCircle,
-  success: AiOutlineCheckCircle,
-  fail: AiOutlineCloseCircle,
-  loading: AiOutlineLoading,
+  info: <AiOutlineInfoCircle />,
+  success: <AiOutlineCheckCircle />,
+  fail: <AiOutlineCloseCircle />,
+  loading: <AiOutlineLoading />,
 }
 
 // 自定义动画钩子
@@ -41,9 +41,7 @@ const BaseToast = ({ msg, Icon }) => {
   return (
     <ToastContainer opacity={opacity}>
       <div>
-        <IconContainer>
-          <Icon />
-        </IconContainer>
+        <IconContainer>{Icon}</IconContainer>
         <Text>{msg}</Text>
       </div>
     </ToastContainer>
@@ -56,9 +54,7 @@ const LoadingToast = ({ msg, Icon }) => {
   return (
     <ToastContainer opacity={opacity}>
       <div>
-        <IconSpinContainer>
-          <Icon />
-        </IconSpinContainer>
+        <IconSpinContainer>{Icon}</IconSpinContainer>
         <Text>{msg}</Text>
       </div>
     </ToastContainer>
@@ -79,7 +75,15 @@ const clear = () => {
 
 // render方法
 const handleToastRender = (options) => {
-  const Icon = iconTypes[options.type]
+  // 处理自定义图片 type 优先级最高 其次icon
+  let Icon = <AiOutlineInfoCircle />
+  if (options.icon) {
+    Icon = options.icon
+  }
+
+  if (options.type) {
+    Icon = iconTypes[options.type]
+  }
 
   // 如果toast已经存在 则销毁后重建
   clear()
@@ -96,10 +100,10 @@ const handleToastRender = (options) => {
 
   const HocComponent = options.forbidClick ? (
     <Mask>
-      <Component msg={options.message} Icon={() => <Icon />} />
+      <Component msg={options.message} Icon={Icon} />
     </Mask>
   ) : (
-    <Component msg={options.message} Icon={() => <Icon />} />
+    <Component msg={options.message} Icon={Icon} />
   )
 
   ReactDOM.render(HocComponent, div)
@@ -153,10 +157,20 @@ const loading = (opts) => {
   handleToastRender(options)
 }
 
+const show = (opts) => {
+  const options = {
+    ...defaultOpts,
+    ...opts,
+  }
+
+  handleToastRender(options)
+}
+
 export default {
   info,
   success,
   fail,
   loading,
   clear,
+  show,
 }
