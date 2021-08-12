@@ -26,9 +26,11 @@ const useTransition = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setOpacity(1)
+      document.body.style.overflow = 'hidden'
     })
     return () => {
       clearTimeout(timer)
+      document.body.style.overflow = ''
     }
   }, [])
 
