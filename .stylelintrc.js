@@ -14,6 +14,12 @@ module.exports = {
         ignore: ['after-comment', 'first-nested'],
       },
     ],
+    'value-keyword-case': [
+      'lower',
+      {
+        ignoreProperties: ['z-index'],
+      },
+    ],
   },
   ignoreFiles: ['node_modules/**/*', 'dist/**/*'],
 }
