@@ -7,6 +7,7 @@ import axios from '@util/request'
 
 import Scroll from '@component/scroll'
 import Toast from '@component/toast'
+import Popup from '@component/popup'
 
 import './index.less'
 
@@ -70,6 +71,8 @@ const App = () => {
           </div>
         ))}
       </Scroll>
+
+      <Popup />
     </div>
   )
 }
