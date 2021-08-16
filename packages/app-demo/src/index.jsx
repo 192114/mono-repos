@@ -72,7 +72,7 @@ const App = () => {
         ))}
       </Scroll>
 
-      <Popup />
+      <Popup round position="left" />
     </div>
   )
 }

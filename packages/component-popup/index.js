@@ -1,10 +1,13 @@
 // popup
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { Mask, Container } from './style'
 
 const PopUp = ({ zIndex, ...rest }) => {
+  useEffect(() => {
+    return () => {}
+  }, [])
   return createPortal(
     <Mask zIndex={zIndex}>
       <Container {...rest}>111</Container>
