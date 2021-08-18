@@ -19,7 +19,7 @@ export const Container = styled.div((props) => {
 
   const style = {
     background: '#fff',
-    padding: 16,
+    padding: '6px 16px 16px',
     boxSizing: 'border-box',
     position: 'absolute',
     [position]: 0,
@@ -48,3 +48,19 @@ export const Container = styled.div((props) => {
 
   return style
 })
+
+export const Title = styled.div`
+  position: relative;
+  width: 100%;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+`
+
+export const CloseIcon = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #8d8d8d;
+  font-size: 24px;
+`

@@ -24,6 +24,7 @@ const getList = (start) => {
 const App = () => {
   const [list, setList] = useState(getList(0))
   const [pullUpLoading, setPullUpLoading] = useState(false)
+  const [popupShow, setPopupShow] = useState(false)
 
   useEffect(() => {
     const getApkRes = async () => {
@@ -65,6 +66,9 @@ const App = () => {
         >
           toast 自定义
         </button>
+        <button type="button" onClick={() => setPopupShow(true)}>
+          show popup
+        </button>
         {list.map((item) => (
           <div key={item} style={{ height: 30 }}>
             {item}
@@ -72,7 +76,7 @@ const App = () => {
         ))}
       </Scroll>
 
-      <Popup round position="left" />
+      <Popup round position="bottom" show={popupShow} title="title" onClose={() => setPopupShow(false)} />
     </div>
   )
 }
